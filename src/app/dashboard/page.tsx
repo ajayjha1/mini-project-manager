@@ -18,7 +18,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     dispatch(fetchProjects());
-    dispatch(fetchTasks());
+    dispatch(fetchTasks({}));
   }, [dispatch]);
 
   // const handleProjectSelect = (project: Project) => {
