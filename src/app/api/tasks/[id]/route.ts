@@ -6,7 +6,7 @@ import { authenticateUser } from '@/middleware/auth';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
@@ -19,8 +19,9 @@ export async function GET(
       );
     }
 
+    const { id } = await params;
     const task = await Task.findOne({
-      _id: params.id,
+      _id: id,
       userId: user._id,
     }).populate('projectId', 'title');
 
@@ -43,7 +44,7 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
@@ -78,8 +79,9 @@ export async function PUT(
       );
     }
 
+    const { id } = await params;
     const task = await Task.findOneAndUpdate(
-      { _id: params.id, userId: user._id },
+      { _id: id, userId: user._id },
       {
         title,
         description,
@@ -115,7 +117,7 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
@@ -128,8 +130,9 @@ export async function DELETE(
       );
     }
 
+    const { id } = await params;
     const task = await Task.findOneAndDelete({
-      _id: params.id,
+      _id: id,
       userId: user._id,
     });
 

@@ -6,7 +6,7 @@ import { authenticateUser } from '@/middleware/auth';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
@@ -19,8 +19,9 @@ export async function GET(
       );
     }
 
+    const { id } = await params;
     const project = await Project.findOne({
-      _id: params.id,
+      _id: id,
       userId: user._id,
     });
 
@@ -43,7 +44,7 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
@@ -65,8 +66,9 @@ export async function PUT(
       );
     }
 
+    const { id } = await params;
     const project = await Project.findOneAndUpdate(
-      { _id: params.id, userId: user._id },
+      { _id: id, userId: user._id },
       { title, description },
       { new: true }
     );
@@ -96,7 +98,7 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
@@ -110,8 +112,9 @@ export async function DELETE(
     }
 
     // Check if project exists and belongs to user
+    const { id } = await params;
     const project = await Project.findOne({
-      _id: params.id,
+      _id: id,
       userId: user._id,
     });
 
@@ -123,10 +126,10 @@ export async function DELETE(
     }
 
     // Delete all tasks associated with this project
-    await Task.deleteMany({ projectId: params.id });
+    await Task.deleteMany({ projectId: id });
 
     // Delete the project
-    await Project.findByIdAndDelete(params.id);
+    await Project.findByIdAndDelete(id);
 
     return NextResponse.json(
       { message: 'Project deleted successfully' },
