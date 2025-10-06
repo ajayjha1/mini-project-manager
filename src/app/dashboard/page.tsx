@@ -8,7 +8,7 @@ import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import Header from '@/components/layout/Header';
 import ProjectList from '@/components/projects/ProjectList';
 import TaskList from '@/components/tasks/TaskList';
-import { Project } from '@/features/projects/projectsSlice';
+// import { Project } from '@/features/projects/projectsSlice';
 import { ArrowLeft } from 'lucide-react';
 
 export default function Dashboard() {

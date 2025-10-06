@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
     const sortOrder = searchParams.get('sortOrder') || 'desc';
 
     // Build query
-    const query: any = { userId: user._id };
+    const query: { userId: string; projectId?: string; status?: string } = { userId: user._id };
     
     if (projectId) {
       query.projectId = projectId;
@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Build sort object
-    const sort: any = {};
+    const sort: Record<string, 1 | -1> = {};
     sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
 
     const tasks = await Task.find(query)
