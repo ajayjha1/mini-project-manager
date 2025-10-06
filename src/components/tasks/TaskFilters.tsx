@@ -17,13 +17,23 @@ export default function TaskFilters() {
   const handleFilterChange = (key: 'projectId' | 'status', value: string | null) => {
     const newFilters = { ...filters, [key]: value };
     dispatch(setFilters(newFilters));
-    dispatch(fetchTasks({ ...newFilters, sortBy, sortOrder }));
+    dispatch(fetchTasks({ 
+      projectId: newFilters.projectId || undefined,
+      status: newFilters.status || undefined,
+      sortBy, 
+      sortOrder 
+    }));
   };
 
   const handleSortChange = (newSortBy: string) => {
     const newSortOrder = sortBy === newSortBy && sortOrder === 'asc' ? 'desc' : 'asc';
     dispatch(setSorting({ sortBy: newSortBy, sortOrder: newSortOrder }));
-    dispatch(fetchTasks({ ...filters, sortBy: newSortBy, sortOrder: newSortOrder }));
+    dispatch(fetchTasks({ 
+      projectId: filters.projectId || undefined,
+      status: filters.status || undefined,
+      sortBy: newSortBy, 
+      sortOrder: newSortOrder 
+    }));
   };
 
   const handleClearFilters = () => {
