@@ -31,8 +31,9 @@ export const fetchProjects = createAsyncThunk(
     try {
       const response = await axios.get('/api/projects');
       return response.data.projects;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.error || 'Failed to fetch projects');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { error?: string } } };
+      return rejectWithValue(axiosError.response?.data?.error || 'Failed to fetch projects');
     }
   }
 );
@@ -43,8 +44,9 @@ export const createProject = createAsyncThunk(
     try {
       const response = await axios.post('/api/projects', projectData);
       return response.data.project;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.error || 'Failed to create project');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { error?: string } } };
+      return rejectWithValue(axiosError.response?.data?.error || 'Failed to create project');
     }
   }
 );
@@ -55,8 +57,9 @@ export const updateProject = createAsyncThunk(
     try {
       const response = await axios.put(`/api/projects/${id}`, projectData);
       return response.data.project;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.error || 'Failed to update project');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { error?: string } } };
+      return rejectWithValue(axiosError.response?.data?.error || 'Failed to update project');
     }
   }
 );
@@ -67,8 +70,9 @@ export const deleteProject = createAsyncThunk(
     try {
       await axios.delete(`/api/projects/${id}`);
       return id;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.error || 'Failed to delete project');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { error?: string } } };
+      return rejectWithValue(axiosError.response?.data?.error || 'Failed to delete project');
     }
   }
 );
@@ -79,8 +83,9 @@ export const fetchProject = createAsyncThunk(
     try {
       const response = await axios.get(`/api/projects/${id}`);
       return response.data.project;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.error || 'Failed to fetch project');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { error?: string } } };
+      return rejectWithValue(axiosError.response?.data?.error || 'Failed to fetch project');
     }
   }
 );

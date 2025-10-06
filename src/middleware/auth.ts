@@ -27,8 +27,8 @@ export async function authenticateUser(request: NextRequest) {
   }
 }
 
-export function withAuth(handler: Function) {
-  return async (request: NextRequest, ...args: any[]) => {
+export function withAuth(handler: (request: NextRequest, ...args: unknown[]) => Promise<NextResponse>) {
+  return async (request: NextRequest, ...args: unknown[]) => {
     const user = await authenticateUser(request);
     
     if (!user) {
@@ -39,7 +39,7 @@ export function withAuth(handler: Function) {
     }
 
     // Add user to request object
-    (request as any).user = user;
+    (request as { user: typeof user }).user = user;
     return handler(request, ...args);
   };
 }

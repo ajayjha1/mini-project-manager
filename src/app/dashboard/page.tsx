@@ -21,10 +21,10 @@ export default function Dashboard() {
     dispatch(fetchTasks());
   }, [dispatch]);
 
-  const handleProjectSelect = (project: Project) => {
-    dispatch({ type: 'projects/setCurrentProject', payload: project });
-    setActiveTab('tasks');
-  };
+  // const handleProjectSelect = (project: Project) => {
+  //   dispatch({ type: 'projects/setCurrentProject', payload: project });
+  //   setActiveTab('tasks');
+  // };
 
   const handleBackToProjects = () => {
     dispatch({ type: 'projects/setCurrentProject', payload: null });

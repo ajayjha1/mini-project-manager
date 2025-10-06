@@ -54,8 +54,9 @@ export const fetchTasks = createAsyncThunk(
 
       const response = await axios.get(`/api/tasks?${searchParams.toString()}`);
       return response.data.tasks;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.error || 'Failed to fetch tasks');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { error?: string } } };
+      return rejectWithValue(axiosError.response?.data?.error || 'Failed to fetch tasks');
     }
   }
 );
@@ -66,8 +67,9 @@ export const createTask = createAsyncThunk(
     try {
       const response = await axios.post('/api/tasks', taskData);
       return response.data.task;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.error || 'Failed to create task');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { error?: string } } };
+      return rejectWithValue(axiosError.response?.data?.error || 'Failed to create task');
     }
   }
 );
@@ -78,8 +80,9 @@ export const updateTask = createAsyncThunk(
     try {
       const response = await axios.put(`/api/tasks/${id}`, taskData);
       return response.data.task;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.error || 'Failed to update task');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { error?: string } } };
+      return rejectWithValue(axiosError.response?.data?.error || 'Failed to update task');
     }
   }
 );
@@ -90,8 +93,9 @@ export const deleteTask = createAsyncThunk(
     try {
       await axios.delete(`/api/tasks/${id}`);
       return id;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.error || 'Failed to delete task');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { error?: string } } };
+      return rejectWithValue(axiosError.response?.data?.error || 'Failed to delete task');
     }
   }
 );
@@ -102,8 +106,9 @@ export const fetchTask = createAsyncThunk(
     try {
       const response = await axios.get(`/api/tasks/${id}`);
       return response.data.task;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.error || 'Failed to fetch task');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { error?: string } } };
+      return rejectWithValue(axiosError.response?.data?.error || 'Failed to fetch task');
     }
   }
 );

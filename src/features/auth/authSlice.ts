@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export interface User {
@@ -29,8 +29,9 @@ export const signupUser = createAsyncThunk(
     try {
       const response = await axios.post('/api/auth/signup', userData);
       return response.data;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.error || 'Signup failed');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { error?: string } } };
+      return rejectWithValue(axiosError.response?.data?.error || 'Signup failed');
     }
   }
 );
@@ -41,8 +42,9 @@ export const loginUser = createAsyncThunk(
     try {
       const response = await axios.post('/api/auth/login', userData);
       return response.data;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.error || 'Login failed');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { error?: string } } };
+      return rejectWithValue(axiosError.response?.data?.error || 'Login failed');
     }
   }
 );
@@ -53,8 +55,9 @@ export const logoutUser = createAsyncThunk(
     try {
       await axios.post('/api/auth/logout');
       return null;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.error || 'Logout failed');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { error?: string } } };
+      return rejectWithValue(axiosError.response?.data?.error || 'Logout failed');
     }
   }
 );
@@ -65,8 +68,9 @@ export const checkAuth = createAsyncThunk(
     try {
       const response = await axios.get('/api/auth/me');
       return response.data;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.error || 'Auth check failed');
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { error?: string } } };
+      return rejectWithValue(axiosError.response?.data?.error || 'Auth check failed');
     }
   }
 );

@@ -1,6 +1,6 @@
 'use client';
 
-import { Task, TaskStatus } from '@/features/tasks/tasksSlice';
+import { Task } from '@/features/tasks/tasksSlice';
 import { Calendar, MoreHorizontal, Edit, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { useAppDispatch } from '@/lib/hooks';
